@@ -13,8 +13,9 @@ class UserManager(BaseUserManager):
         user = self.model(
             phone = phone,
             username = username,
-            email = self.normalize_email(email),
         )
+        if email:
+            user.email = self.normalize_email(email),
         user.set_password(password)
         user.save(using = self._db)
         return user

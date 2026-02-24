@@ -24,7 +24,6 @@ class UserCreationForm(forms.ModelForm):
             raise ValidationError("The passwords do not match.")
         return cd["conform_password"]
     
-
 class UserChangeForm(forms.ModelForm):
     password = ReadOnlyPasswordHashField()
 

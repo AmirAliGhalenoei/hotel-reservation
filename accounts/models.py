@@ -11,7 +11,7 @@ class User(PermissionsMixin, AbstractBaseUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     phone = models.CharField(max_length=11,unique=True,validators=[validate_integer,validate_iranian_phone],db_index=True)
     username = models.CharField(max_length=255)
-    email = models.EmailField(max_length=60, unique=True, validators=[validate_email])
+    email = models.EmailField(max_length=60, unique=True, validators=[validate_email],null=True,blank=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
@@ -37,5 +37,13 @@ class User(PermissionsMixin, AbstractBaseUser):
     @property
     def is_staff(self):
         return self.is_admin
+    
+class OTP(models.Model):
+    phone = models.CharField(max_length=11,validators=[validate_integer,validate_iranian_phone])
+    code = models.BigIntegerField()
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.created)
     
     
